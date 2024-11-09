@@ -8,6 +8,7 @@ class MenuRol extends BaseDatos {
 
     public function __construct()
     {
+        parent::__construct();
         $this->objMenu = null;
         $this->objRol = null;
         $this->mensajeOperacion = "";
