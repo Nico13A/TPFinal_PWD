@@ -12,4 +12,8 @@ Agregué configuracion.php.
 
 modifiqué en el archivo basedatos.php en nombre de la bd, 'tpfinal'.
 
-Agregué la carpeta login con el index.php y accion.php
+Agregué la carpeta login con el index.php y accion.php.
+
+Cree un usuario: "1","admin","admin@uncoma.com,"1234,"0000-00-00 00:00:00".
+
+Para verificar que anda, en consola les debería aparecer "Success: admin@uncoma.com"; Resta completar qué hacer una vez que se valida.
