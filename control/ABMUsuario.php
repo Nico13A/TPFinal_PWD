@@ -167,6 +167,25 @@ class ABMUsuario {
         return $resp;
     }
 
+    function UsuarioValido($datos) {
+
+        $objUsuario = new Usuario();
+        $usuarios = $objUsuario->listar();
+        $found = false;
+        foreach ($usuarios as $usuario) {
+            if ($usuario->getUsMail() == $datos['usmail'] && $usuario->getUsPass() == $datos['uspass']) {
+                // Usuario válido
+                $resp = json_encode(['error' => false, 'nombre' => $usuario->getUsMail()]);
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            // Usuario no válido
+            $resp = json_encode(['error' => true, 'mensaje' => "Datos incorrectos"]);
+        }
+        return $resp;
+    }
 }
 
 ?>

@@ -1,0 +1,15 @@
+La solicitud del form, ahora no se manda por accion="", este manda su informacion por post, pero dentro del evento o funcion IniciarSesion.js, que es un archivo definido en la carpeta js.
+Linea 6: agregué la referencia a jquery que esta dentro de la carpeta doc. ESTO DEBERIA ESTAR EN EL ENCABEZADO
+Linea 38: Llamo a la funcion IniciarSesion()
+Linea 9: Agrego la referencia a las funciones de js, ESTO DEBERÍA ESTAR EN EL ENCABEZADO PERO AUN NO HAY.
+Comenté la funcionalidad de encriptación de momento. (REQUIERE MODIFICACIONES EN BASE A LO NUEVO).
+Dentro de la funcion IniciarSesion() hay una descripcion de como es y como funciona.
+URL: Va a un accion que realiza las solicitudes correspondientes al ABMUsuario, podríamos directamente definir todo dentro del ABMUsuario (nos ahorrariamos un script) pero por el momento, esta forma funciona.
+accion.php : llama a la funcion UsuarioValido definida en ABMUsuario. La resp que obtiene es un json_encode() con los datos que obtuvo. Si es coincidente, manda 'error' = false, y los datos que necesitemos, de momento
+solo mandé el email como respuesta.
+
+Agregué configuracion.php.
+
+modifiqué en el archivo basedatos.php en nombre de la bd, 'tpfinal'.
+
+Agregué la carpeta login con el index.php y accion.php
