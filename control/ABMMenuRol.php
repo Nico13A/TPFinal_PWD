@@ -123,6 +123,26 @@ class ABMMenuRol {
         $arreglo = $objMenuRol->listar($where);
         return $arreglo;
     }
+
+
+    /**
+     * Obtiene los menús asociados a un rol específico.
+     * @param int $idRol
+     * @return array
+     */
+    public function obtenerMenuesPorRol($idRol) {
+        $where = " idrol = " . $idRol;
+        $objMenuRol = new MenuRol();
+        $arregloMenuRol = $objMenuRol->listar($where);
+        $menues = [];
+        foreach ($arregloMenuRol as $menuRol) {
+            $menu = $menuRol->getObjMenu(); 
+            $menu->cargar(); 
+            $menues[] = $menu;
+        }
+        return $menues;
+    }
+
 }
 
 ?>
