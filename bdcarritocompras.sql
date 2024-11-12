@@ -143,6 +143,10 @@ COMMIT;
 INSERT INTO `usuario` (`usnombre`, `uspass`, `usmail`, `usdeshabilitado`)
 VALUES ('admin', MD5('admin123'), 'admin@example.com', NULL);
 
+-- Creando roles
+INSERT INTO `rol` (`rodescripcion`) VALUES ('ADMIN');
+INSERT INTO `rol` (`rodescripcion`) VALUES ('CLIENTE');
+
 -- Crear los menús
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
 (1, 'Productos', '../Cliente/productos.php', NULL, NULL),
