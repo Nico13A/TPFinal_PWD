@@ -1,39 +1,40 @@
-function cerrarSesion(){
-    console.log("ok");
-    $.ajax({
-        type: "POST",
-        url: '../accion/cerrarSesion.php',
-        success: function(response){
-            var jsonData = JSON.parse(response);
-            // user is logged in successfully in the back-end
-            // let's redirect
-            if (jsonData.success == "1"){
-                sesionCerrada();
-            }
-            else if (jsonData.success == "0"){
-                sesionNoCerrada();
-            }
-       }
-   });
-}
+// Manejo del cierre de sesión
+$(document).ready(function() {
+    $("#cierreSesion").click(async function() {
+        try {
+            const response = await $.ajax({
+                url: '../accion/cerrarSesion.php',
+                type: 'POST',
+                dataType: 'json' // Indica que se espera recibir una respuesta en formato JSON desde el servidor.
+            });
 
-function sesionCerrada(){
-    Swal.fire({
-        icon: 'success',
-        title: 'Se cerró la sesión',
-        showConfirmButton: false,
-        timer: 1500
-    })
-    setTimeout(function(){
-        location.href = "../paginas/home.php";
-    },1500);
-}
-
-function sesionNoCerrada(){
-    Swal.fire({
-        icon: 'error',
-        title: 'No se cerró la sesión',
-        showConfirmButton: false,
-        timer: 1500
-    })
-}
+            if (response.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sesión finalizada',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = "../../index.php";
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema con la conexión al servidor.',
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    });
+});

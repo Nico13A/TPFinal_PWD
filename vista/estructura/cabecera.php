@@ -72,7 +72,7 @@ if ($objSession->validar()) {
                             <?php } ?>
                         <?php } ?>
                         <li class="nav-item">
-                            <a href="cerrar-sesion.php" class="nav-link link-secondary fs-5">Salir</a>
+                            <button id="cierreSesion" class="btn btn-link nav-link link-secondary fs-5">Salir</button>
                         </li>        
                     <?php } ?>
                 </ul>

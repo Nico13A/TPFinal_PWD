@@ -1,13 +1,16 @@
 <?php
+include_once("../../configuracion.php");
 
-include_once('../../configuracion.php');
+$session = new Session();
+$response = array();
 
-$objSesion = new Session();
-$cierreSesion = $objSesion->cerrar();
-if ($cierreSesion) {
-    echo json_encode(['success' => true, 'message' => 'Sesión cerrada correctamente']);
+if ($session->cerrar()) {
+    $response['status'] = 'success';
+    $response['message'] = 'Sesión cerrada correctamente.';
 } else {
-    echo json_encode(['success' => false, 'message' => 'No se pudo cerrar la sesión']);
+    $response['status'] = 'error';
+    $response['message'] = 'No se pudo cerrar la sesión.';
 }
 
+echo json_encode($response);
 ?>
