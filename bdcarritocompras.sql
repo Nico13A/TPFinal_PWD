@@ -170,3 +170,16 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (7, 1), -- Manejo de productos
 (8, 1), -- Estado de compras
 (9, 1); -- Gestión de menú
+
+-- Insertar el nuevo usuario "JuanPerez"
+INSERT INTO `usuario` (`usnombre`, `uspass`, `usmail`, `usdeshabilitado`)
+VALUES ('JuanPerez', MD5('cliente123'), 'juanperez@example.com', NULL);
+
+-- Asignar el rol de cliente al nuevo usuario
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES ((SELECT idusuario FROM usuario WHERE usnombre='JuanPerez'), 2);
+
+-- Asignar los menús específicos al rol de cliente
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(1, 2), -- Productos
+(2, 2), -- Mis Compras
+(3, 2); -- Mi Perfil
