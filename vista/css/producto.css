@@ -1,0 +1,24 @@
+.botonComprar {
+    background-color: #43D87E;
+    border: none;
+}
+
+.botonVer {
+    background-color: #FDFD67;
+    border: none;
+    color: #6C757D;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1);
+}
+
+.botonVer:hover {
+    transform: scale(1.2);
+}
+
+.propiedadProducto {
+    font-weight: 500;
+}
+
+.imagen-producto-modal {
+    max-width: 250px;
+}

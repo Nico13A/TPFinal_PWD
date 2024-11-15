@@ -38,6 +38,8 @@ if ($objSession->validar()) {
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/estilos.css">
     <link rel="stylesheet" href="../css/formulario.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="stylesheet" href="../css/producto.css">
 
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script src="../jQuery/jquery-3.6.1.min.js"></script>
