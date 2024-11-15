@@ -9,7 +9,8 @@ $menues = [];
 $menuPublico = [
     ["link" => "../../index.php", "nombre" => "Home"],
     ["link" => "../cliente/productos.php", "nombre" => "Nuestros productos"],
-    ["link" => "../sesion/iniciarSesion.php", "nombre" => "Iniciar Sesión"]
+    ["link" => "../sesion/iniciarSesion.php", "nombre" => "Iniciar Sesión"],
+    ["link" => "../registro/registro.php", "nombre" => "Registrarse"]
 ];
 
 // Verificamos si la sesión está activa

@@ -186,6 +186,22 @@ class ABMUsuario {
         }
         return $resp;
     }
+
+
+    function Registro($datos) {
+        
+        $resp = false;
+       
+        $resp = $this->alta($datos);
+        
+
+
+        return $resp;
+    }
+
+
+
 }
+
 
 ?>
