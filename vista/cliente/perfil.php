@@ -4,11 +4,31 @@ include_once "../estructura/cabecera.php";
 
 $datos = data_submitted();
 
-$idUsuario = $_SESSION["idusuario"];
+if (!$objSession->validar()) {
+    header("Location: ../sesion/iniciarSesion.php");
+    exit; 
+}
+
+// Obtener el usuario logueado
+$usuario = $objSession->getUsuario();
+
+// Verificar si se obtuvo el usuario correctamente
+if ($usuario == null) {
+    echo "<p class='text-danger text-center'>Error: No se pudo obtener los datos del usuario.</p>";
+    exit;
+}
+
+$idUsuario = $usuario->getIdUsuario();
 
 $obj = new ABMUsuario();
 
 $datosUsuario = $obj->buscar(["idusuario" => $idUsuario]);
+
+// Verificar si se encontraron datos del usuario
+if (count($datosUsuario) == 0) {
+    echo "<p class='text-danger text-center'>Error: Usuario no encontrado.</p>";
+    exit;
+}
 
 $objUsuario = $datosUsuario[0];
 
