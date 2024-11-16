@@ -6,10 +6,11 @@ $(document).ready(function() {
         let passhash = CryptoJS.MD5(uspass).toString();
 
         $("#uspass").val(passhash);
-        $.ajax({
+             $.ajax({
             url: './accion/accionRegistro.php',
             type: 'POST',
             data: $("#formulario-registro").serialize(),
+            dataType: 'json',
             success: function(response) {
                 if (response.status === 'Entro') {
                     Swal.fire({
