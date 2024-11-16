@@ -183,3 +183,6 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 2), -- Productos
 (2, 2), -- Mis Compras
 (3, 2); -- Mi Perfil
+
+-- Cambio del URL en el menu 4
+UPDATE menu SET medescripcion = '../usuarios/index.php' WHERE idmenu = 4;
