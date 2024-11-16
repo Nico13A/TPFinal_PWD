@@ -42,8 +42,14 @@ class Session {
             $usuario = $resultado[0];
             // Verificar la contraseña
             if ($usuario->verificarClave($psw)) {
-                $_SESSION['idusuario'] = $usuario->getIdUsuario();
-                $resp = true;
+                if($usuario->getUsDeshabilitado() == '0000-00-00 00:00:00'){
+                    $_SESSION['idusuario'] = $usuario->getIdUsuario();
+                    $resp = true;
+                }
+                else{
+                    $this->cerrar();
+                }
+
             } else {
                 $this->cerrar();
             }

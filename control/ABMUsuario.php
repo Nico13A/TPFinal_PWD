@@ -166,25 +166,32 @@ class ABMUsuario {
         }
         return $resp;
     }
-
-    function UsuarioValido($datos) {
-
-        $objUsuario = new Usuario();
-        $usuarios = $objUsuario->listar();
-        $found = false;
-        foreach ($usuarios as $usuario) {
-            if ($usuario->getUsMail() == $datos['usmail'] && $usuario->getUsPass() == $datos['uspass']) {
-                // Usuario válido
-                $resp = json_encode(['error' => false, 'nombre' => $usuario->getUsMail()]);
-                $found = true;
-                break;
+    
+    public function Habilitar($id) {
+        $param['idusuario'] = $id;
+        $usuario = $this->buscar($param);
+        if (count($usuario) > 0) {
+            $usuario[0]->setUsDeshabilitado('NULL');
+            $usuarioArray = $usuario[0]->toArray();
+            if ($this->modificacion($usuarioArray)) {
+                return true;
             }
         }
-        if (!$found) {
-            // Usuario no válido
-            $resp = json_encode(['error' => true, 'mensaje' => "Datos incorrectos"]);
+        return false;
+    }
+
+
+    public function Deshabilitar($id, $tiempo) {
+        $param['idusuario'] = $id;
+        $usuario = $this->buscar($param);
+        if (count($usuario) > 0) {
+            $usuario[0]->setUsDeshabilitado($tiempo);
+            $usuarioArray = $usuario[0]->toArray();
+            if ($this->modificacion($usuarioArray)) {
+                return true;
+            }
         }
-        return $resp;
+        return false;
     }
 
 

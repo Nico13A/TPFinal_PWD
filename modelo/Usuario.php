@@ -3,20 +3,20 @@
 class Usuario extends BaseDatos {
 
     //ATRIBUTOS
-    private $idUsuario;
-    private $usNombre;
-    private $usPass;
-    private $usMail;
-    private $usDeshabilitado;
+    private $idusuario;
+    private $usnombre;
+    private $uspass;
+    private $usmail;
+    private $usdeshabilitado;
     private $mensajeOperacion;
 
     public function __construct() {
         parent::__construct();
-        $this->idUsuario = "";
-        $this->usNombre = "";
-        $this->usPass = "";
-        $this->usMail = "";
-        $this->usDeshabilitado = "";
+        $this->idusuario = "";
+        $this->usnombre = "";
+        $this->uspass = "";
+        $this->usmail = "";
+        $this->usdeshabilitado = "";
         $this->mensajeOperacion = "";
     }
 
@@ -24,34 +24,34 @@ class Usuario extends BaseDatos {
         $this->setIdUsuario($idusuario);
         $this->setUsNombre($usnombre);
         $this->setUsPass($uspass);
-        $this->setUsMail($usmail);
+        $this->setUsMail($usmail);       
         $this->setUsDeshabilitado($usdeshabilitado);
     }
 
     //SETTERS
     public function setIdUsuario($idUsuario)
     {
-        $this->idUsuario = $idUsuario;
+        $this->idusuario = $idUsuario;
     }
 
     public function setUsNombre($usNombre)
     {
-        $this->usNombre = $usNombre;
+        $this->usnombre = $usNombre;
     }
 
     public function setUsPass($usPass)
     {
-        $this->usPass = $usPass;
+        $this->uspass = $usPass;
     }
 
     public function setUsMail($usMail)
     {
-        $this->usMail = $usMail;
+        $this->usmail = $usMail;
     }
 
     public function setUsDeshabilitado($usDeshabilitado)
     {
-        $this->usDeshabilitado = $usDeshabilitado;
+        $this->usdeshabilitado = $usDeshabilitado;
     }
 
     public function setMensajeOperacion($mensajeOperacion)
@@ -62,27 +62,27 @@ class Usuario extends BaseDatos {
     // GETTERS
     public function getIdUsuario()
     {
-        return $this->idUsuario;
+        return $this->idusuario;
     }
 
     public function getUsNombre()
     {
-        return $this->usNombre;
+        return $this->usnombre;
     }
 
     public function getUsPass()
     {
-        return $this->usPass;
+        return $this->uspass;
     }
 
     public function getUsMail()
     {
-        return $this->usMail;
+        return $this->usmail;
     }
 
     public function getUsDeshabilitado()
     {
-        return $this->usDeshabilitado;
+        return $this->usdeshabilitado;
     }
 
     public function getMensajeOperacion()
@@ -239,6 +239,18 @@ class Usuario extends BaseDatos {
         return $resp;
     }    
 
+    public function toArray() {
+        //convierte a array el obj
+        return [
+            'idusuario' => $this->getIdUsuario(),
+            'usnombre' => $this->getUsNombre(),
+            'uspass' => $this->getUsPass(),
+            'usmail' => $this->getUsMail(),
+            'usdeshabilitado' => $this->getUsDeshabilitado()
+        ];
+    }
 }
+
+
 
 ?>
