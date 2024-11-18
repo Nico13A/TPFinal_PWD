@@ -16,7 +16,7 @@ include_once("../estructura/cabecera.php");
                 <label for="uspass" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" name="uspass" id="uspass" required>
             </div>
-            <button type="submit" class="btn btn-success botonEnviar" onclick="formSubmit()">INGRESAR</button>
+            <button type="submit" class="btn btn-success botonEnviar">INGRESAR</button>
         </form>
         <div class="col-3"></div>
     </div>

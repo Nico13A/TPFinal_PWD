@@ -20,13 +20,13 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000
                     }).then(() => {
-                        window.location.href = "../home/index.php";
+                        window.location.href = "../sesion/iniciarSesion.php";
                     });
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Registro Fallido',
+                        text: response.message || 'Registro Fallido',
                         timer: 2000,
                         showConfirmButton: false
                     });
@@ -35,7 +35,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 Swal.fire({
                     title: 'Error',
-                    text: 'Hubo un problema al conectar con el servidor.',
+                    text:  response.message || 'Hubo un problema al conectar con el servidor.',
                     icon: 'error',
                     timer: 3000,
                     showConfirmButton: false

@@ -138,6 +138,34 @@ class ABMUsuarioRol {
         $arreglo = $obj->listar($where);
         return $arreglo;
     }
+
+    public function SwitchRol($id){
+        //obtengo el rol asignado al id.
+        $resp = false;
+        $pm['idusuario'] = $id;
+        $datos = $this->buscar($pm);
+        $objUsuarioRol = $datos[0];
+        //$objUsuarioActual = $objUsuarioRol->getObjUsuario();
+        $rolActual = $objUsuarioRol->getObjRol()->getIdRol();
+        $param['idusuario'] = $id;
+        $usuarioRol = new UsuarioRol();
+        switch($rolActual){
+            case '2': //es cliente, cambia a 3 (deposito)
+                $param['idrol'] = 3;
+                //var_dump($param);
+                if($this->modificacion($param)){
+                    $resp = true;
+                }
+                break;
+            case '3': //es deposito, cambia a 2 (cliente)
+                $param['idrol'] = 2;
+                if($this->modificacion($param)){
+                    $resp = true;
+                }
+                break;
+        }
+        return $resp;
+    }
     
 }
 

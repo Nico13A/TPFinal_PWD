@@ -1,20 +1,34 @@
 <?php
 $Titulo = "Code Wear - Perfil usuario";
 include_once "../estructura/cabecera.php";
+// VALIDA SI LA SESION SIGUE ACTIVA o NO 
+// -------- [SE PODRÍA MEJORAR CON UNA FUNCITON DE JAVA, QUE PREVENGA QUE LA PÁGINA CARGUE Y POR MIENTRAS VERIFIQUE] -------- 
+$obj = new Session();
+$resp = $obj->validar();
+if($resp) {
+    //el usuario es valido, que rol tiene?
+    if(($_SESSION['idusuario']) == 1){
+        // es admin, no se hace nada, continua con la navegacion
+    }
+    else{
+        //header ('Location: href="../HomeLector/index.php');
+        echo("<script>location.href = '../home/index.php';</script>");
+    }
+
+} else {
+    //header ('Location: ../Inicio/index.php');
+    echo("<script>location.href = '../sesion/iniciarSesion.php';</script>");
+}
 //Acá debería listar todos los usuarios de la bd usando ajax
 $datos = data_submitted();
-
 $idUsuario = $_SESSION["idusuario"];
-
 $obj = new ABMUsuario();
-
 $datosUsuario = $obj->buscar("");
 
-//$objUsuario = $datosUsuario[0];
 
 ?>
 
-<h2 class="display-5 fw-normal text-center py-4">Datos personales</h2>
+<h2 class="display-5 fw-normal text-center py-4">Gestión de usuarios</h2>
 <div class="container py-2 mb-4 contenedorTabla">
     <table class="table table-dark table-striped">
         <thead>
@@ -35,7 +49,7 @@ $datosUsuario = $obj->buscar("");
                     <?php
                         if ($objUsuario->getUsDeshabilitado() == '0000-00-00 00:00:00') { //el usuario no esta deshabilitado
                             if($objUsuario->getIdUsuario() == '1'){
-                                echo '<button class="btn btn-danger" name="idusuario" onclick="deshabilitarUsuario(' . $objUsuario->getIdUsuario() . ')" disabled>Deshabilitar</button>';
+                                echo '<button class="btn btn-light" name="idusuario" onclick="deshabilitarUsuario(' . $objUsuario->getIdUsuario() . ')" disabled>Deshabilitar</button>';
                             }
                             else{
                                 echo '<button class="btn btn-danger" name="idusuario" onclick="deshabilitarUsuario(' . $objUsuario->getIdUsuario() . ')">Deshabilitar</button>';

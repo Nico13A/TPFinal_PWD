@@ -20,7 +20,8 @@ include_once("../estructura/cabecera.php");
                 <label for="usmail" class="form-label">Email</label>
                 <input type="text" class="form-control" name="usmail" id="usmail" required>
             </div>
-            <button type="submit" class="btn btn-success botonEnviar" onclick="formSubmit()">Registrarse</button>
+            <button type="submit" class="btn btn-success botonEnviar">Registrarse</button>
+
         </form>
         <div class="col-3"></div>
     </div>
