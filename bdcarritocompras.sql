@@ -146,6 +146,7 @@ VALUES ('admin', MD5('admin123'), 'admin@example.com', NULL);
 -- Creando roles
 INSERT INTO `rol` (`rodescripcion`) VALUES ('ADMIN');
 INSERT INTO `rol` (`rodescripcion`) VALUES ('CLIENTE');
+INSERT INTO 'rol' ('rodescripcion') VALUES ('DEPOSITO');
 
 -- Crear los menús
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
