@@ -1,66 +1,61 @@
-$(document).ready(function() {
-    // Función para manejar el envío del formulario
-    const descripcion = { descripcion: $('#descripcion').val() };
-
-    async function agregarRol(url, descripcion, modalId, exitoMensaje, errorMensaje) {
+$(document).ready(function () {
+    async function agregarRol(url, datos, modalId, exitoMensaje, errorMensaje) {
         try {
             const response = await $.ajax({
                 type: "POST",
                 url: url,
-                data: descripcion,
-                dataType: 'json'
+                data: datos,
+                dataType: "json",
             });
 
-            if (response.status === 'success') {
+            if (response.status === "success") {
                 Swal.fire({
-                    icon: 'success',
+                    icon: "success",
                     title: exitoMensaje,
                     text: response.message,
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
                 }).then(() => {
-                    $(modalId).modal('hide');
+                    $(modalId).modal("hide");
+                    location.reload(); 
                 });
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
+                    icon: "error",
+                    title: "Error",
                     text: response.message,
                     timer: 1500,
-                    showConfirmButton: false
+                    showConfirmButton: false,
                 });
             }
         } catch (error) {
             Swal.fire({
-                title: 'Error',
+                title: "Error",
                 text: errorMensaje,
-                icon: 'error',
+                icon: "error",
                 timer: 3000,
-                showConfirmButton: false
-            });
+                showConfirmButton: false,
+            })
         }
     }
 
     // Abre el modal
-    $("#boton-rol").click(function() {
-        $("#modalRol").modal('show');
+    $("#add-rol").click(function () {
+        $("#modal-rol").modal("show");
     });
 
-
-    // Enviar el formulario para cambiar contraseña.
-    $("#formRol").submit(function(event) {
+    // Enviar el formulario
+    $("#formRol").submit(function (event) {
         event.preventDefault();
-        let descripcion = $(this).serializeArray();
-        });
-
+        let datos = $(this).serialize();
+        // Llamar a la función agregarRol con el objeto
         agregarRol(
             "./accion/nuevoRol.php",
-            $.param(descripcion), // Convertir a string con formato query
-            "#modalRol",
+            datos, // Objeto con clave 'rodescripcion'
+            "#modal-rol",
             "Nuevo rol creado",
             "Hubo un problema con la conexión al servidor."
         );
     });
-
     
-
+});

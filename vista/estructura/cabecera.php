@@ -48,6 +48,7 @@ if ($objSession->validar()) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     <!-- Incluir la biblioteca Sweet Alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">

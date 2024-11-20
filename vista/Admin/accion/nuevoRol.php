@@ -2,7 +2,6 @@
 include_once("../../../configuracion.php");
 $datos = data_submitted();
 $obj = new ABMRol();
-
 if (isset($datos['rodescripcion'])) {
     $param['rodescripcion'] = $datos['rodescripcion'];
     $resultado = $obj->alta($param);

@@ -5,7 +5,7 @@ function bajaRol(idRol) {
     $.ajax({
         url: './accion/deshabilitarRol.php',
         type: 'POST',
-        data: { id: idRol},
+        data: { idrol: idRol},
 
         success: function(response) {
             const data = JSON.parse(response);

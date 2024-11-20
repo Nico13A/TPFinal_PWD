@@ -167,6 +167,7 @@ class ABMUsuarioRol {
         return $resp;
     }
     
+    
 }
 
 ?>

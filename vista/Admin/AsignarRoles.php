@@ -7,11 +7,11 @@ $obj = new Session();
 $resp = $obj->validar();
 if($resp) {
     //el usuario es valido, que rol tiene?
-    if(($_SESSION['idusuario']) == 1){
+    if(($obj->getUsuario()->getIdUsuario()) == 1){
         // es admin, no se hace nada, continua con la navegacion
     }
     else{
-        //header ('Location: href="../HomeLector/index.php');
+        //modal?
         echo("<script>location.href = '../home/index.php';</script>");
     }
 
