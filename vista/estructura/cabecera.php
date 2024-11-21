@@ -1,34 +1,27 @@
 <?php
 include_once("../../configuracion.php");
-
+include_once("../home/modales.php");
 // Inicializamos la sesión
 $objSession = new Session();
-
 // Inicializamos los menús como un array vacío
 $menues = [];
 $menuPublico = [
     ["link" => "../../index.php", "nombre" => "Home"],
     ["link" => "../cliente/productos.php", "nombre" => "Nuestros productos"],
-    ["link" => "../sesion/iniciarSesion.php", "nombre" => "Iniciar Sesión"],
-    ["link" => "../registro/registro.php", "nombre" => "Registrarse"]
+    ["link" => "#", "nombre"=>"Iniciar Sesion"] 
 ];
-
 // Verificamos si la sesión está activa
 if ($objSession->validar()) {
-
     // Obtenemos los roles del usuario actual
     $rolesUsuario = $objSession->getRol();
-
     // Inicializamos los objetos para manejar los roles y menús
     $objMenuRol = new ABMMenuRol();
-    
     // Obtenemos los menús asociados al rol del usuario
     if (!empty($rolesUsuario)) {
         $menues = $objMenuRol->obtenerMenuesPorRol($rolesUsuario[0]->getObjRol()->getIdRol());
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -48,7 +41,6 @@ if ($objSession->validar()) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     <!-- Incluir la biblioteca Sweet Alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -61,10 +53,20 @@ if ($objSession->validar()) {
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <!-- Menú público (si el usuario no está logueado) -->
                     <?php if (!$objSession->validar()) { ?>
-                        <?php foreach ($menuPublico as $menu) { ?>
-                            <li class="nav-item">
-                                <a href="<?php echo $menu['link']; ?>" class="nav-link link-secondary fs-5"><?php echo $menu['nombre']; ?></a>
-                            </li>
+                        <?php foreach ($menuPublico as $menu) {
+                            if($menu['nombre'] == 'Iniciar Sesion'){
+                                echo '<li class="nav-item">
+                                <button class="btn btn-dark me-3" name="modal-inicio"  id="modal-inicio" data-bs-toggle="modal" data-bs-target="#modal-inicio"><a href="#" class="nav-link link-secondary fs-5 text-white">Iniciar Sesion</a></button>
+                                </li>';
+                            } 
+                            else{
+                                echo "<li class='nav-item'>
+                                        <button class='btn btn-dark me-3'>
+                                            <a href='{$menu['link']}' class='nav-link link-secondary fs-5 text-white'>{$menu['nombre']}</a>
+                                        </button>
+                                    </li>";
+                            }
+                                ?>
                         <?php } ?>
                     <?php } else { ?>
                         <!-- Menú privado (si el usuario está logueado) -->

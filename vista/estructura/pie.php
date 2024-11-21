@@ -24,6 +24,7 @@
                 </div>
             </div>
         </footer>
+        <script src="../js/inicio.js"></script>
         <script src="../js/cerrarSesion.js"></script>
     </body>
 </html>

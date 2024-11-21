@@ -2,32 +2,25 @@
 $Titulo = "Code Wear - Asignar Rol";
 include_once "../estructura/cabecera.php";
 // VALIDA SI LA SESION SIGUE ACTIVA o NO
-// -------- [SE PODRÍA MEJORAR CON UNA FUNCITON DE JAVA, QUE PREVENGA QUE LA PÁGINA CARGUE Y POR MIENTRAS VERIFIQUE] -------- 
 $obj = new Session();
 $resp = $obj->validar();
 if($resp) {
-    //el usuario es valido, que rol tiene?
     if(($obj->getUsuario()->getIdUsuario()) == 1){
         // es admin, no se hace nada, continua con la navegacion
     }
     else{
-        //modal?
         echo("<script>location.href = '../home/index.php';</script>");
     }
 
 } else {
-    //header ('Location: ../Inicio/index.php');
     echo("<script>location.href = '../sesion/iniciarSesion.php';</script>");
 }
-//Acá debería listar todos los usuarios de la bd usando ajax
-
 $objUR = new ABMUsuarioRol();
 $datosUsuarioRol = $objUR->buscar("");
-
 ?>
 
 <h2 class="display-5 fw-normal text-center py-4">Gestión de Roles</h2>
-<div class="container py-2 mb-4 contenedorTabla">
+<div class="container-fluid py-2 mb-4 contenedorTabla overflow-auto">
     <table class="table table-dark table-striped">
         <thead>
             <tr>

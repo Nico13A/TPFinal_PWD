@@ -196,6 +196,17 @@ class Menu extends BaseDatos {
         return $arreglo;
     }
 
+    public function toArray() {
+        //convierte a array el obj
+        return [
+            'idmenu' => $this->getIdMenu(),
+            'menombre' => $this->getMeNombre(),
+            'medescripcion' => $this->getMeDescripcion(),
+            'idpadre' => $this->getIdPadre(),
+            'medeshabilitado' => $this->getMeDeshabilitado()
+        ];
+    }
+
 }
 
 ?>

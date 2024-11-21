@@ -120,6 +120,33 @@ class ABMMenu {
         $arreglo = $obj->listar($where);
         return $arreglo;
     }
+
+    public function DeshabilitarMenu($id, $tiempo) {
+        $param['idmenu'] = $id;
+        $menus = $this->buscar($param);
+
+        if (count($menus) > 0) {
+            $menus[0]->setMeDeshabilitado($tiempo);
+            $menuArray = $menus[0]->toArray();
+            if ($this->modificacion($menuArray)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function Habilitar($id) {
+        $param['idmenu'] = $id;
+        $menus = $this->buscar($param);
+        if (count($menus) > 0) {
+            $menus[0]->setMeDeshabilitado(null);
+            $MenuArray = $menus[0]->toArray();
+            if ($this->modificacion($MenuArray)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 ?>
