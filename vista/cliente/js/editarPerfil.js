@@ -18,6 +18,7 @@ $(document).ready(function() {
                     timer: 1500
                 }).then(() => {
                     $(modalId).modal('hide');
+                    location.reload();
                 });
             } else {
                 Swal.fire({

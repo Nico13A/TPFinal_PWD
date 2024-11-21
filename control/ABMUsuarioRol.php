@@ -148,7 +148,7 @@ class ABMUsuarioRol {
         //$objUsuarioActual = $objUsuarioRol->getObjUsuario();
         $rolActual = $objUsuarioRol->getObjRol()->getIdRol();
         $param['idusuario'] = $id;
-        $usuarioRol = new UsuarioRol();
+        //$usuarioRol = new UsuarioRol();
         switch($rolActual){
             case '2': //es cliente, cambia a 3 (deposito)
                 $param['idrol'] = 3;

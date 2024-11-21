@@ -12,7 +12,7 @@ if($resp) {
         echo("<script>location.href = '../home/index.php';</script>");
     }
 } else {
-    echo("<script>location.href = '../sesion/iniciarSesion.php';</script>");
+    echo("<script>location.href = '../home/index.php';</script>");
 }
 $objRol = new ABMRol();
 $roles = $objRol->buscar("");
