@@ -36,7 +36,7 @@ $menus = $obj->buscar("");
                 <td class="align-middle">
                 <?php 
                 if ($objMenu->getMeDeshabilitado() == null) {
-                    if($objMenu->getIdMenu()== '9'){
+                    if($objMenu->getMeNombre()== 'Gestión de menú'){
                         echo '<button disabled class="btn btn-light" name="idmenu" onclick="deshabilitarMenu(' . $objMenu->getIdMenu() . ')">Deshabilitar</button>';
                     }
                     else{
