@@ -10,11 +10,11 @@ include_once("../estructura/cabecera.php");
             <h2 class="text-center">Registrarse</h2>
             <div class="mb-3">
                 <label for="usnombre" class="form-label">Usuario</label>
-                <input type="text" class="form-control" name="usnombre" id="usnombre" required>
+                <input type="text" class="form-control" name="usnombre" id="ussnombre" required>
             </div>
             <div class="mb-3">
                 <label for="uspass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" name="uspass" id="uspass" required>
+                <input type="password" class="form-control" name="uspass" id="usspass" required>
             </div>
             <div class="mb-3">
                 <label for="usmail" class="form-label">Email</label>

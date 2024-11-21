@@ -10,7 +10,6 @@ $(document).ready(function() {
             method: 'POST',
             data: { idProducto: idproducto, stock: stock, precio: precio, detalle: detalle,nombre: nombre },
             success: function(response) {
-                try {
                     let jsonResponse = JSON.parse(response);
                     if (jsonResponse.estado === 'exito') {
                         Swal.fire({
@@ -18,7 +17,10 @@ $(document).ready(function() {
                             title: '¡Producto actualizado!',
                             text: 'El producto se actualizó correctamente.',
                             confirmButtonText: 'Aceptar'
-                        });
+                        }).then(() => { 
+                            setTimeout(() => { 
+                                $('#productoModal').modal('hide'); }, 1200);
+                            });
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -27,15 +29,7 @@ $(document).ready(function() {
                             confirmButtonText: 'Aceptar'
                         });
                     }
-                } catch (e) {
-                    console.error('Error al analizar JSON:', e);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'La respuesta del servidor no es válida.',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
+
             },
             error: function(xhr, status, error) {
                 console.error('Error al obtener los datos del producto:', error);

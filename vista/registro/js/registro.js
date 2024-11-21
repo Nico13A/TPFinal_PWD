@@ -2,10 +2,10 @@ $(document).ready(function() {
     $("#formulario-registro").submit(function(event) {
         event.preventDefault(); // Prevenir el envío tradicional del formulario
 
-        let uspass = $("#uspass").val();
+        let uspass = $("#usspass").val();
         let passhash = CryptoJS.MD5(uspass).toString();
 
-        $("#uspass").val(passhash);
+        $("#usspass").val(passhash);
              $.ajax({
             url: './accion/accionRegistro.php',
             type: 'POST',
@@ -20,7 +20,7 @@ $(document).ready(function() {
                         showConfirmButton: false,
                         timer: 2000
                     }).then(() => {
-                        window.location.href = "../sesion/iniciarSesion.php";
+                        window.location.href = "../home/index.php";
                     });
                 } else {
                     Swal.fire({

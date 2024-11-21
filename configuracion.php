@@ -3,6 +3,8 @@
     header('Content-Type: text/html; charset=utf-8');
     header ("Cache-Control: no-cache, must-revalidate ");
 
+    date_default_timezone_set('America/Argentina/Buenos_Aires');
+
     /////////////////////////////
     //    CONFIGURACION APP    //
     /////////////////////////////
