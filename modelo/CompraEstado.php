@@ -80,17 +80,31 @@ class CompraEstado extends BaseDatos {
     public function cargar() {
         $resp = false;
         $sql = "SELECT * FROM compraestado WHERE idcompraestado = " . $this->getIdCompraEstado();
+        
         if ($this->Iniciar()) {
-            if ($res = $this->Ejecutar($sql)) {
-                if ($row = $this->Registro()) {
-                    $compra = new Compra();
-                    $compra->setIdCompra($row['idcompra']);
-                    $compra->cargar();
-
-                    $compraEstadoTipo = new CompraEstadoTipo();
-                    $compraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
-                    $compraEstadoTipo->cargar();
-
+            $res = $this->Ejecutar($sql);
+            
+            if ($res > -1) { // Verificamos que la ejecución fue exitosa
+                if ($res > 0) { // Solo procesamos si hay resultados
+                    $row = $this->Registro();
+                    
+                    // Cargar objeto Compra
+                    $compra = null;
+                    if ($row['idcompra'] != null) {
+                        $compra = new Compra();
+                        $compra->setIdCompra($row['idcompra']);
+                        $compra->cargar();
+                    }
+    
+                    // Cargar objeto CompraEstadoTipo
+                    $compraEstadoTipo = null;
+                    if ($row['idcompraestadotipo'] != null) {
+                        $compraEstadoTipo = new CompraEstadoTipo();
+                        $compraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
+                        $compraEstadoTipo->cargar();
+                    }
+                    
+                    // Establecer los valores en el objeto actual
                     $this->setear($row['idcompraestado'], $compra, $compraEstadoTipo, $row['cefechaini'], $row['cefechafin']);
                     $resp = true;
                 }
@@ -100,9 +114,10 @@ class CompraEstado extends BaseDatos {
         } else {
             $this->setMensajeOperacion("CompraEstado->cargar: " . $this->getError());
         }
+        
         return $resp;
     }
-
+    
     public function insertar() {
         $resp = false;
         $sql = "INSERT INTO compraestado (idcompra, idcompraestadotipo, cefechaini, cefechafin) 
@@ -160,26 +175,39 @@ class CompraEstado extends BaseDatos {
     }
 
     public function listar($parametro = "") {
-        $arreglo = array();
+        $arreglo = array(); 
         $sql = "SELECT * FROM compraestado ";
         if ($parametro != "") {
             $sql .= 'WHERE ' . $parametro;
         }
+        
         if ($this->Iniciar()) {
-            if ($res = $this->Ejecutar($sql)) {
-                while ($row = $this->Registro()) {
-                    $obj = new CompraEstado();
-
-                    $objCompra = new Compra();
-                    $objCompra->setIdCompra($row['idcompra']);
-                    $objCompra->cargar();
-
-                    $objCompraEstadoTipo = new CompraEstadoTipo();
-                    $objCompraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
-                    $objCompraEstadoTipo->cargar();
-
-                    $obj->setear($row['idcompraestado'], $objCompra, $objCompraEstadoTipo, $row['cefechaini'], $row['cefechafin']);
-                    array_push($arreglo, $obj);
+            $res = $this->Ejecutar($sql);
+            if ($res > -1) { // Verifica que la consulta no haya fallado
+                if ($res > 0) { // Solo procesa si hay resultados
+                    while ($row = $this->Registro()) {
+                        $obj = new CompraEstado();
+    
+                        // Carga de objeto Compra si el id no es null
+                        $objCompra = null;
+                        if (!is_null($row['idcompra'])) {
+                            $objCompra = new Compra();
+                            $objCompra->setIdCompra($row['idcompra']);
+                            $objCompra->cargar();
+                        }
+    
+                        // Carga de objeto CompraEstadoTipo si el id no es null
+                        $objCompraEstadoTipo = null;
+                        if (!is_null($row['idcompraestadotipo'])) {
+                            $objCompraEstadoTipo = new CompraEstadoTipo();
+                            $objCompraEstadoTipo->setIdCompraEstadoTipo($row['idcompraestadotipo']);
+                            $objCompraEstadoTipo->cargar();
+                        }
+    
+                        // Configura los valores en el objeto CompraEstado
+                        $obj->setear($row['idcompraestado'], $objCompra, $objCompraEstadoTipo, $row['cefechaini'], $row['cefechafin']);
+                        array_push($arreglo, $obj);
+                    }
                 }
             } else {
                 $this->setMensajeOperacion("CompraEstado->listar: " . $this->getError());
@@ -187,8 +215,10 @@ class CompraEstado extends BaseDatos {
         } else {
             $this->setMensajeOperacion("CompraEstado->listar: " . $this->getError());
         }
+        
         return $arreglo;
     }
+    
 }
 
 

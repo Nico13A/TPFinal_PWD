@@ -14,6 +14,7 @@
     $ROOT = $_SERVER['DOCUMENT_ROOT'] . "/$PROYECTO/";
 
     include_once($ROOT . 'util/funciones.php');
+    include_once($ROOT . 'util/enviarCorreoConPDF.php');
 
     // Variable que define la pagina principal del proyecto (menu principal).
     $PRINCIPAL = "Location:http://" . $_SERVER['HTTP_HOST'] . "/$PROYECTO/vista/home/index.php";

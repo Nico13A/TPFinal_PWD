@@ -58,21 +58,23 @@ class CompraEstadoTipo extends BaseDatos {
     public function cargar() {
         $resp = false;
         $sql = "SELECT * FROM compraestadotipo WHERE idcompraestadotipo = " . $this->getIdCompraEstadoTipo();
-        if ($this->Iniciar()) {
+    
+        if ($this->Iniciar()) { // Usamos 'this' porque 'Iniciar' es un método de la clase base.
             $res = $this->Ejecutar($sql);
             if ($res > -1) {
-                if ($row = $this->Registro()) {
+                if ($res > 0) { // Verificamos si la consulta devolvió resultados
+                    $row = $this->Registro(); // Usamos 'Registro' para obtener la fila de datos
                     $this->setear($row['idcompraestadotipo'], $row['cetdescripcion'], $row['cetdetalle']);
                     $resp = true;
                 }
-            } else {
-                $this->setMensajeOperacion("CompraEstadoTipo->cargar: " . $this->getError());
             }
         } else {
             $this->setMensajeOperacion("CompraEstadoTipo->cargar: " . $this->getError());
         }
+        
         return $resp;
     }
+    
 
     public function insertar() {
         $resp = false;
@@ -126,20 +128,30 @@ class CompraEstadoTipo extends BaseDatos {
         if ($parametro != "") {
             $sql .= 'WHERE ' . $parametro;
         }
-        if ($this->Iniciar()) {
+        
+        if ($this->Iniciar()) { // Usamos 'this' para acceder a la clase base
             $res = $this->Ejecutar($sql);
-            if ($res > -1) {
-                while ($row = $this->Registro()) {
-                    $obj = new CompraEstadoTipo();
-                    $obj->setear($row['idcompraestadotipo'], $row['cetdescripcion'], $row['cetdetalle']);
-                    array_push($arreglo, $obj);
+            
+            if ($res > -1) { // Verificamos que la consulta se ejecutó correctamente
+                if ($res > 0) { // Verificamos que hay resultados (mayor que 0)
+                    while ($row = $this->Registro()) { // Usamos 'this->Registro()' para obtener la fila
+                        $obj = new CompraEstadoTipo();
+                        $obj->setear($row['idcompraestadotipo'], $row['cetdescripcion'], $row['cetdetalle']);
+                        array_push($arreglo, $obj);
+                    }
+                } else {
+                    $this->setMensajeOperacion("CompraEstadoTipo->listar: No se encontraron resultados.");
                 }
             } else {
                 $this->setMensajeOperacion("CompraEstadoTipo->listar: " . $this->getError());
             }
+        } else {
+            $this->setMensajeOperacion("CompraEstadoTipo->listar: " . $this->getError());
         }
+    
         return $arreglo;
     }
+    
 }
 
 ?>

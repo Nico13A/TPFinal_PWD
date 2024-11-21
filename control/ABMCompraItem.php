@@ -8,21 +8,9 @@ class ABMCompraItem {
      */
     private function cargarObjeto($param) {
         $objCompraItem = null;
-        if (array_key_exists('idcompraitem',$param) && array_key_exists('idproducto',$param) && array_key_exists('idcompra',$param) && array_key_exists('cicantidad',$param)) {
+        if (array_key_exists('idcompraitem', $param) and array_key_exists('idproducto', $param) and array_key_exists('idcompra', $param) and array_key_exists('cicantidad', $param)) {
             $objCompraItem = new CompraItem();
-            $objProducto = null;
-            $objCompra = null;
-            if ($param['idproducto'] != null) {
-                $objProducto = new Producto();
-                $objProducto->setIdProducto($param['idproducto']);
-                $objProducto->cargar();
-            }
-            if ($param['idcompra'] != null) {
-                $objCompra = new Compra();
-                $objCompra->setIdCompra($param['idcompra']);
-                $objCompra->cargar();
-            }
-            $objCompraItem->setear($param['idcompraitem'], $objProducto, $objCompra, $param['cicantidad']);
+            $objCompraItem->setear($param['idcompraitem'], $param['idproducto'], $param['idcompra'], $param['cicantidad']);
         }
         return $objCompraItem;
     }
@@ -32,6 +20,7 @@ class ABMCompraItem {
      * @param array $param
      * @return CompraItem|null
      */
+    /*
     private function cargarObjetoConClave($param) {
         $objCompraItem = null;
         if (isset($param['idcompraitem']) ){
@@ -40,6 +29,16 @@ class ABMCompraItem {
         }
         return $objCompraItem;
     }
+    */
+    private function cargarObjetoConClave($param){
+        $obj = null;
+        if( isset($param['idcompraitem']) ){
+            $obj = new CompraItem();
+            $obj->setIdCompraItem($param['idcompraitem']);
+            $obj->cargar();
+        }
+        return $obj;
+    }
 
     /**
      * Corrobora que dentro del arreglo asociativo estan seteados los campos claves.
@@ -47,7 +46,11 @@ class ABMCompraItem {
      * @return boolean
      */
     private function seteadosCamposClaves($param) {
-        return isset($param['idcompraitem']);
+        $resp = false;
+        if (isset($param['idcompraitem'])) {
+            $resp = true;
+        }
+        return $resp;
     }
 
     /**
@@ -74,7 +77,7 @@ class ABMCompraItem {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
             $objCompraItem = $this->cargarObjetoConClave($param);
-            if ($objCompraItem != null && $objCompraItem->eliminar()) {
+            if ($objCompraItem != null and $objCompraItem->eliminar()) {
                 $resp = true;
             }
         }
@@ -118,6 +121,7 @@ class ABMCompraItem {
         $arregloCompraItem = $objCompraItem->listar($where);
         return $arregloCompraItem;
     }
+
 }
 
 ?>

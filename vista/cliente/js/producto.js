@@ -18,6 +18,7 @@ $('.botonVer').on('click', function() {
                 });
             } else {
                 // Actualiza el contenido del modal con los datos del producto.
+                $('#idproducto').val(data.idProducto);
                 $('#product-name').text(data.nombre);
                 $('#product-details').html('<span class="propiedadProducto">Descripción:</span> ' + data.detalle);
                 $('#product-price').html('<span class="propiedadProducto">Precio:</span> $' + data.precio);
@@ -26,13 +27,13 @@ $('.botonVer').on('click', function() {
 
                 // Verifica el stock disponible
                 if (data.stock > 0) {
-                    $('#cantidadProducto').attr('max', data.stock); // Limita la cantidad al stock disponible
-                    $('#cantidadProducto').prop('disabled', false); // Habilita el campo de cantidad
+                    $('#cicantidad').attr('max', data.stock); // Limita la cantidad al stock disponible
+                    $('#cicantidad').prop('disabled', false); // Habilita el campo de cantidad
                     $('#agregar-al-carrito').prop('disabled', false); // Habilita el botón de agregar al carrito
                     $('#product-stock').removeClass('text-danger');
                 } else {
-                    $('#cantidadProducto').val(0); // Establece la cantidad a 0
-                    $('#cantidadProducto').prop('disabled', true); // Deshabilita el campo de cantidad
+                    $('#cicantidad').val(0); // Establece la cantidad a 0
+                    $('#cicantidad').prop('disabled', true); // Deshabilita el campo de cantidad
                     $('#agregar-al-carrito').prop('disabled', true); // Deshabilita el botón de agregar al carrito
                     $('#product-stock').addClass('text-danger').text('¡Sin stock!'); // Muestra mensaje de sin stock
                 }

@@ -121,7 +121,8 @@ INSERT INTO `compraestadotipo` (`idcompraestadotipo`, `cetdescripcion`, `cetdeta
 (1, 'iniciada', 'cuando el usuario : cliente inicia la compra de uno o mas productos del carrito'),
 (2, 'aceptada', 'cuando el usuario administrador da ingreso a uno de las compras en estado = 1 '),
 (3, 'enviada', 'cuando el usuario administrador envia a uno de las compras en estado =2 '),
-(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 ');
+(4, 'cancelada', 'un usuario administrador podra cancelar una compra en cualquier estado y un usuario cliente solo en estado=1 '),
+(5, 'carrito', 'cuando un usuario agrega algo al carrito pero no compra nada aun ');
 
 -- Auto-incremento para las tablas
 ALTER TABLE `compra` MODIFY `idcompra` INT(11) NOT NULL AUTO_INCREMENT;
@@ -141,23 +142,23 @@ COMMIT;
 
 -- Crear el usuario administrador
 INSERT INTO `usuario` (`usnombre`, `uspass`, `usmail`, `usdeshabilitado`)
-VALUES ('admin', MD5('admin123'), 'admin@example.com', NULL);
+VALUES ('admin', MD5('admin123'), 'admin@example.com', '0000-00-00 00:00:00');
 
 -- Creando roles
 INSERT INTO `rol` (`rodescripcion`) VALUES ('ADMIN');
 INSERT INTO `rol` (`rodescripcion`) VALUES ('CLIENTE');
-INSERT INTO 'rol' ('rodescripcion') VALUES ('DEPOSITO');
+INSERT INTO `rol` (`rodescripcion`) VALUES ('DEPOSITO');
 
 -- Crear los menús
 INSERT INTO `menu` (`idmenu`, `menombre`, `medescripcion`, `idpadre`, `medeshabilitado`) VALUES
-(1, 'Productos', '../Cliente/productos.php', NULL, NULL),
-(2, 'Mis Compras', '../Cliente/compras.php', NULL, NULL),
-(3, 'Mi Perfil', '../Cliente/perfil.php', NULL, NULL),
-(4, 'Usuarios', '../Admin/listaUsuarios.php', NULL, NULL),
-(5, 'Roles', '../Admin/roles.php', NULL, NULL),
-(6, 'Asignar roles', '../Admin/asignarRoles.php', NULL, NULL),
-(7, 'Manejo de productos', '../Admin/manejoProductos.php', NULL, NULL),
-(8, 'Estado de compras', '../Admin/gestionarCompras.php', NULL, NULL),
+(1, 'Productos', '../cliente/productos.php', NULL, NULL),
+(2, 'Mis Compras', '../cliente/compras.php', NULL, NULL),
+(3, 'Mi Perfil', '../cliente/perfil.php', NULL, NULL),
+(4, 'Estado de compras', '../deposito/gestionarCompras.php', NULL, NULL),
+(5, 'Manejo de productos', '../deposito/manejarProductos.php', NULL, NULL),
+(6, 'Usuarios', '../Admin/listaUsuarios.php', NULL, NULL),
+(7, 'Roles', '../Admin/Roles.php', NULL, NULL),
+(8, 'Asignar roles', '../Admin/AsignarRoles.php', NULL, NULL),
 (9, 'Gestión de menú', '../Admin/manejoMenu.php', NULL, NULL);
 
 -- Asignar el rol de administrador al usuario administrador
@@ -165,12 +166,10 @@ INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES (1, 1);
 
 -- Asignar los menús específicos al rol de administrador
 INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
-(4, 1), -- Usuarios
-(5, 1), -- Roles
-(6, 1), -- Asignar roles
-(7, 1), -- Manejo de productos
-(8, 1), -- Estado de compras
-(9, 1); -- Gestión de menú
+(6, 1), -- Usuarios
+(7, 1), -- Roles
+(8, 1), -- Asignar roles
+(9, 1); -- Gestion de menu
 
 -- Insertar el nuevo usuario "JuanPerez"
 INSERT INTO `usuario` (`usnombre`, `uspass`, `usmail`, `usdeshabilitado`)
@@ -184,4 +183,33 @@ INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
 (1, 2), -- Productos
 (2, 2), -- Mis Compras
 (3, 2); -- Mi Perfil
+
+-- Inserción de productos en la tabla `producto`
+INSERT INTO `producto` (`pronombre`, `prodetalle`, `procantstock`, `proprecio`, `urlimagen`) VALUES
+('Remera Vue.js', 'Remera gris oscura con el logo de Vue.js', 10, 8000, '1.jpg'),
+('Remera AngularJs', 'Remera gris clara con el logo de AngularJs', 10, 10000, '2.jpg'),
+('Remera React', 'Remera negra con el logo de React', 10, 12000, '3.jpg'),
+('Remera Redux', 'Remera amarilla con el logo de Redux', 10, 9500, '4.jpg'),
+('Remera Node.js', 'Remera gris con el logo de Node.js', 10, 8500, '5.jpg'),
+('Remera Sass', 'Remera negra con el logo de Sass', 10, 7000, '6.jpg'),
+('Remera HTML5', 'Remera gris con el logo de HTML', 10, 6500, '7.jpg'),
+('Remera GitHub', 'Remera morada con el logo de GitHub', 10, 11000, '8.jpg'),
+('Remera Bulma', 'Remera roja con el logo de Bulma', 10, 4500, '9.jpg'),
+('Remera TypeScript', 'Remera blanca con el logo de TypeScript', 10, 8500, '10.jpg'),
+('Remera Drupal', 'Remera azul con el logo de Drupal', 10, 9500, '11.jpg'),
+('Remera Javascript', 'Remera amarilla con el logo de Javascript', 10, 15000, '12.jpg'),
+('Remera GraphQL', 'Remera negra con el logo de GraphQL', 10, 7000, '13.jpg'),
+('Remera WordPress', 'Remera roja con el logo de WordPress', 10, 9000, '14.jpg');
+
+-- Insertar el nuevo usuario deposito "deposito"
+INSERT INTO `usuario` (`usnombre`, `uspass`, `usmail`, `usdeshabilitado`)
+VALUES ('deposito', MD5('deposito123'), 'deposito@gmail.com', NULL);
+
+-- Asignar el rol de deposito al nuevo usuario
+INSERT INTO `usuariorol` (`idusuario`, `idrol`) VALUES ((SELECT idusuario FROM usuario WHERE usnombre='deposito'), 3);
+
+-- Asignar los menús específicos al rol de deposito
+INSERT INTO `menurol` (`idmenu`, `idrol`) VALUES
+(4, 3), 
+(5, 3); 
 

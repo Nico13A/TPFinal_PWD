@@ -7,10 +7,10 @@ class BaseDatos extends PDO {
     private $database;
     private $user;
     private $pass;
-  	private $debug;
-  	private $conec;
-  	private $indice;
-  	private $resultado;
+    private $debug;
+    private $conec;
+    private $indice;
+    private $resultado;
     private $error;
     private $sql;
     
@@ -67,9 +67,19 @@ class BaseDatos extends PDO {
     /**
      * Funcion que retorna una cadena con descripcion del ultimo error seteado
      * @return 
-     */
+     *//*
     public function getError() {
         return "\n" . implode("::", $this->error);
+    }*/
+
+    public function getError() {
+        // Suponiendo que $this->error es un array, revisa que realmente sea un array antes de usar implode
+        if (is_array($this->error)) {
+            return implode("::", $this->error);
+        } else {
+            // Maneja el caso donde $this->error no es un array
+            return $this->error;
+        }
     }
     
     /**

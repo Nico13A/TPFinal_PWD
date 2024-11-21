@@ -120,6 +120,130 @@ class ABMCompraEstado {
         $arreglo = $obj->listar($where);
         return $arreglo;
     }
+
+    /**
+     * Busca una compra en estado "carrito".
+     * @param array $comprasUsuario Array de compras del usuario.
+     * @return CompraEstado|null 
+     */
+    /*
+    public function buscarCompraEnEstadoCarrito($comprasUsuario) {
+        $estadoCarrito = 1; // Suponiendo que el estado "carrito" tiene idcompraestadotipo = 1
+        $compraEnCarrito = null;
+
+        foreach ($comprasUsuario as $compra) {
+            $param = [
+                'idcompra' => $compra->getIdCompra(),
+                'idcompraestadotipo' => $estadoCarrito,
+            ];
+            $resultados = $this->buscar($param);
+
+            if (!empty($resultados)) {
+                $compraEnCarrito = $resultados[0]; // Tomamos la primera coincidencia.
+                break;
+            }
+        }
+
+        return $compraEnCarrito;
+    }*/
+    public function buscarCompraEnEstadoCarrito($comprasUsuario) {
+        $compraEnCarrito = null;
+        $i = 0;
+
+        // Busca en el array de compras si hay alguna con el estado "carrito".
+        while (($compraEnCarrito == null) && ($i < count($comprasUsuario))) {
+            $idCompra["idcompra"] = $comprasUsuario[$i]->getIdCompra();
+            $arrayCompraEstado = $this->buscar($idCompra);
+
+            // Verifica si el estado de la compra es "carrito".
+            if ($arrayCompraEstado[0]->getObjCompraEstadoTipo()->getCetDescripcion() == "iniciada") {
+                $compraEnCarrito = $arrayCompraEstado[0];
+            } else {
+                $i++;
+            }
+        }
+
+        return $compraEnCarrito;
+    }
+
+
+
+
+
+
+    /*
+    public function buscarCompraCarrito($arrayCompra) {
+        $objCompraEstadoCarrito = null;
+        $i = 0;
+        // Iterar por cada compra para encontrar la que está en estado "carrito"
+        while (($objCompraEstadoCarrito == null) && ($i < count($arrayCompra))) {
+            // Obtener el ID de la compra actual
+            $idCompra["idcompra"] = $arrayCompra[$i]->getIdCompra();
+            // Buscar los estados asociados a esta compra
+            $arrayCompraEstado = $this->buscar($idCompra);
+            // Validar si alguno de los estados es "carrito"
+            if (!empty($arrayCompraEstado) && $arrayCompraEstado[0]->getCompraEstadoTipo()->getCetDescripcion() == "carrito") {
+                $objCompraEstadoCarrito = $arrayCompraEstado[0];
+            }
+            $i++;
+        }
+        // Devolver la compra en estado "carrito" o null si no se encuentra
+        return $objCompraEstadoCarrito;
+    }
+    */
+
+/*
+    public function obtenerOCrearCarrito($idUsuario) {
+        $compraCarrito = null;
+    
+        // Buscar compras existentes del usuario
+        $abmCompra = new ABMCompra();
+        $compras = $abmCompra->buscarComprasDeUsuario($idUsuario);
+    
+        // Buscar si alguna compra tiene estado "carrito"
+        foreach ($compras as $compra) {
+            $compraEstados = $this->buscar(['idcompra' => $compra->getIdCompra()]);
+            foreach ($compraEstados as $compraEstado) {
+                if ($compraEstado->getObjCompraEstadoTipo()->getIdCompraEstadoTipo() == 1) { // Estado "carrito"
+                    $compraCarrito = $compra;
+                    break 2; // Rompemos ambos loops si encontramos el carrito
+                }
+            }
+        }
+    
+        // Si no existe, crear una nueva compra con estado "carrito"
+        if (!$compraCarrito) {
+            // Crear una nueva compra
+            $nuevaCompra = [
+                'idusuario' => $idUsuario,
+            ];
+            
+            if ($abmCompra->alta($nuevaCompra)) {
+                $ultimaCompra = $abmCompra->obtenerUltimaCompra($idUsuario);
+    
+                if ($ultimaCompra) {
+                    // Crear el estado "carrito" para la nueva compra
+                    $paramEstado = [
+                        "idcompra" => $ultimaCompra->getIdCompra(),
+                        "idcompraestadotipo" => 1, // Estado "carrito"
+                        "cefechaini" => (new DateTime())->format('Y-m-d H:i:s'),
+                        "cefechafin" => null
+                    ];
+    
+                    // Usamos ABMCompraEstado para agregar el estado "carrito"
+                    $this->alta($paramEstado);
+                    $compraCarrito = $ultimaCompra;
+                }
+            }
+        }
+    
+        return $compraCarrito;
+    }
+    */
+    
+    
+
+
 }
 
 ?>

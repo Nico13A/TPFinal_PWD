@@ -110,6 +110,18 @@ class ABMProducto {
         $arregloProductos = $objProducto->listar($where);
         return $arregloProductos;
     }
+
+
+    public function obtenerStockProducto($idProducto) {
+        // Buscar el producto por ID
+        $productos = $this->buscar(['idproducto' => $idProducto]);
+    
+        // Retornar el stock si el producto existe, o 0 si no
+        return count($productos) > 0 ? $productos[0]->getProCantStock() : 0;
+    }
+    
+    
+
 }
 
 ?>

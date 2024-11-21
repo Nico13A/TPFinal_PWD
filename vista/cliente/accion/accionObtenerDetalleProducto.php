@@ -11,6 +11,7 @@ if (isset($datos['id'])) {
     if (count($productos) > 0) {
         $producto = $productos[0];
         $data = [
+            'idProducto' => $producto->getIdProducto(),
             'nombre' => $producto->getProNombre(),
             'precio' => $producto->getProPrecio(),
             'imagen' => $URLIMAGEN . $producto->getUrlImagen(),

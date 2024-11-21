@@ -70,7 +70,7 @@ class CompraItem extends BaseDatos {
 
     public function cargar() {
         $resp = false;
-        $sql = "SELECT * FROM compraitem WHERE idcompraitem = '" . $this->getIdCompraItem() . "'";
+        $sql = "SELECT * FROM compraitem WHERE idcompraitem = " . $this->getIdCompraItem();
         if ($this->Iniciar()) {
             $res = $this->Ejecutar($sql);
             if ($res > -1) {
@@ -127,8 +127,8 @@ class CompraItem extends BaseDatos {
 
     public function eliminar() {
         $resp = false;
-        $sql = "DELETE FROM compraitem WHERE idcompraitem = '" . $this->getIdCompraItem() . "'";
         if ($this->Iniciar()) {
+            $sql="DELETE FROM compraitem WHERE idcompraitem = ".$this->getIdCompraItem();
             if ($this->Ejecutar($sql)) {
                 $resp = true;
             } else {

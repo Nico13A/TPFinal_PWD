@@ -6,6 +6,7 @@ class ABMCompra {
      * @param array $param
      * @return object
      */
+    /*
     private function cargarObjeto($param) {
         $objCompra = null;
         if (array_key_exists('idcompra', $param) && array_key_exists('cofecha', $param) && array_key_exists('idusuario', $param)) {
@@ -17,6 +18,18 @@ class ABMCompra {
                 $objUsuario->cargar();
             }
             $objCompra->setear($param['idcompra'], $param['cofecha'], $objUsuario);
+        }
+        return $objCompra;
+    }*/
+    private function cargarObjeto($param)
+    {
+        $objCompra = null;
+
+        if (array_key_exists('idcompra', $param) and array_key_exists('cofecha', $param) and array_key_exists('idusuario', $param)) {
+            $objCompra = new Compra();
+            if(!$objCompra->setear($param['idcompra'], $param['cofecha'], $param['idusuario'])){
+                $objCompra = null;
+            }
         }
         return $objCompra;
     }
@@ -113,6 +126,7 @@ class ABMCompra {
         $arregloCompras = $objCompra->listar($where);
         return $arregloCompras;
     }
+
 }
 
 ?>

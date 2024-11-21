@@ -2,12 +2,24 @@
 $Titulo = "Code Wear - Perfil usuario";
 include_once "../estructura/cabecera.php";
 
+$objSession = new Session();
+$resp = $objSession->validar();
+if($resp) {
+    if(($objSession->getRol()[0]->getObjRol()->getRoDescripcion()) == 'CLIENTE'){
+        // es deposito, no se hace nada, continua con la navegacion
+    }
+    else {
+        echo("<script>location.href = '../home/index.php';</script>");
+    }
+
+} else {
+    echo("<script>location.href = '../home/index.php';</script>");
+}
+
+
+
 $datos = data_submitted();
 
-if (!$objSession->validar()) {
-    header("Location: ../sesion/iniciarSesion.php");
-    exit; 
-}
 
 // Obtener el usuario logueado
 $usuario = $objSession->getUsuario();
