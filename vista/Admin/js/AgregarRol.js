@@ -1,36 +1,4 @@
 $(document).ready(function () {
-    async function agregarRol(url, datos, modalId, exitoMensaje, errorMensaje) {
-        try {
-            const response = await $.ajax({
-                type: "POST",
-                url: url,
-                data: datos,
-                dataType: "json",
-            });
-
-            if (response.status === "success") {
-                $(modalId).modal("hide");
-                location.reload(); 
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: response.message,
-                    timer: 1500,
-                    showConfirmButton: false,
-                });
-            }
-        } catch (error) {
-            Swal.fire({
-                title: "Error",
-                text: errorMensaje,
-                icon: "error",
-                timer: 3000,
-                showConfirmButton: false,
-            })
-        }
-    }
-
     // Abre el modal
     $("#add-rol").click(function () {
         $("#modal-rol").modal("show");
@@ -40,14 +8,43 @@ $(document).ready(function () {
     $("#formRol").submit(function (event) {
         event.preventDefault();
         let datos = $(this).serialize();
-        // Llamar a la función agregarRol con el objeto
-        agregarRol(
-            "./accion/nuevoRol.php",
-            datos, // Objeto con clave 'rodescripcion'
-            "#modal-rol",
-            "Nuevo rol creado",
-            "Hubo un problema con la conexión al servidor."
-        );
+
+        $.ajax({
+            type: "POST",
+            url: "./accion/nuevoRol.php",
+            data: datos,
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    $("#modal-rol").modal("hide");
+                    Swal.fire({
+                        icon: "success",
+                        title: "Éxito",
+                        text: response.message,
+                        timer: 1500,
+                        showConfirmButton: false,
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: response.message,
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: "Error",
+                    text: "Hubo un problema con la conexión al servidor.",
+                    icon: "error",
+                    timer: 3000,
+                    showConfirmButton: false,
+                });
+            }
+        });
     });
-    
 });

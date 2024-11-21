@@ -6,37 +6,8 @@ include_once($ROOT . "util/fpdf/fpdf.php");
 include_once($ROOT . 'util/vendor/autoload.php');
 
 // Función para generar el PDF
-/*
 function generarPDFCompra($idCompra, $compraEstadoTipo, $objCompraItem) {
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(40, 10, 'Detalles de la Compra');
-    $pdf->Ln(20);
-
-    // Detalles de la compra
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(40, 10, 'ID Compra: ' . $idCompra);
-    $pdf->Ln(10);
-    $pdf->Cell(40, 10, 'Estado de Compra: ' . $compraEstadoTipo->getCetDescripcion());
-    $pdf->Ln(10);
-
-    $arrayCompraItem = $objCompraItem->buscar(["idcompra" => $idCompra]);
-    foreach ($arrayCompraItem as $compraItem) {
-        $producto = $compraItem->getObjProducto();
-        $pdf->Cell(40, 10, 'Producto: ' . $producto->getProNombre());
-        $pdf->Ln(10);
-        $pdf->Cell(40, 10, 'Cantidad: ' . $compraItem->getCiCantidad());
-        $pdf->Ln(10);
-        $pdf->Cell(40, 10, 'Precio: $' . $producto->getProPrecio());
-        $pdf->Ln(10);
-    }
-
-    // Retornar el contenido del PDF como string
-    return $pdf->Output('S');
-}*/
-function generarPDFCompra($idCompra, $compraEstadoTipo, $objCompraItem) {
-    global $URLIMAGEN; // Asegúrate de que $URLIMAGEN ya esté disponible en el contexto
+    global $URLIMAGEN; 
 
     $pdf = new FPDF();
     $pdf->AddPage();
@@ -91,6 +62,7 @@ function generarPDFCompra($idCompra, $compraEstadoTipo, $objCompraItem) {
 
 // Función para enviar el correo con el PDF adjunto
 function enviarCorreoConPDF($emailDestinatario, $idCompra, $compraEstadoTipo, $objCompraItem) {
+    $exito = false;
     try {
         // Generar el PDF
         $pdfContent = generarPDFCompra($idCompra, $compraEstadoTipo, $objCompraItem);
@@ -100,8 +72,8 @@ function enviarCorreoConPDF($emailDestinatario, $idCompra, $compraEstadoTipo, $o
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'nicoantinao1998@gmail.com';  // Cambia esto por tu correo
-        $mail->Password = 'myca nkfc mgnm fcka';        // Cambia esto por tu contraseña
+        $mail->Username = 'nicoantinao1998@gmail.com';  
+        $mail->Password = 'myca nkfc mgnm fcka';        
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
@@ -120,9 +92,10 @@ function enviarCorreoConPDF($emailDestinatario, $idCompra, $compraEstadoTipo, $o
 
         // Enviar el correo
         $mail->send();
-        return true; // Éxito
+        $exito = true; // Éxito
     } catch (Exception $e) {
-        return false; // Falla
+        $exito = false; // Falla
     }
+    return $exito;
 }
 ?>
